@@ -1,12 +1,30 @@
 const formEl = document.querySelector("form");
 const etaEl = document.getElementById("eta-field");
-
 const kmEl = document.getElementById("km-field");
+
+const kmElement = document.getElementById("km");
+const prezzoEl = document.getElementById("prezzo");
+
 
 formEl.addEventListener("submit", function(event){
     event.preventDefault();
     console.log(etaEl.value);
     console.log(kmEl.value);
     
-})
+    let prezzoBigliettoStandard = 0.21 * kmEl.value;
+    let scontoMinorenni = prezzoBigliettoStandard * 20 / 100;
+    let scontoOver65 = prezzoBigliettoStandard * 40 / 100;
+    let prezzoBiglietto = "";
 
+    if(etaEl.value<18){
+        prezzoBiglietto = prezzoBigliettoStandard - scontoMinorenni;
+        prezzoEl.textContent = prezzoBiglietto.toFixed(2) + " " + "€";
+    } else if(etaEl.value>65){
+        prezzoBiglietto = prezzoBigliettoStandard - scontoOver65;
+        prezzoEl.textContent = prezzoBiglietto.toFixed(2) + " " + "€";
+    } else {
+        prezzoBiglietto = prezzoBigliettoStandard;
+        prezzoEl.textContent = prezzoBiglietto.toFixed(2) + " " + "€";
+    }
+    kmElement.textContent = kmEl.value + " " + "km";
+})
